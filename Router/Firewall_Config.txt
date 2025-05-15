@@ -1,0 +1,44 @@
+hostname Firewall
+
+interface FastEthernet0/0
+  ip address 192.168.12.2 255.255.255.0
+  no shutdown
+
+interface FastEthernet1/0
+  ip address 192.168.5.1 255.255.255.0
+  no shutdown
+
+router rip
+version 2
+  network 192.168.5.0
+  network 192.168.12.0
+
+ip domain-lookup
+ip nameserver 192.168.2.10
+
+no access-list 100
+no access-list 101
+no access-list 102
+
+ACL per DNS
+access-list 100 permit udp any host 192.168.5.10 eq 53
+access-list 100 permit tcp any host 192.168.5.10 eq 53
+
+ACL per SMTP, POP3, IMAP
+access-list 100 permit tcp any host 192.168.5.4 eq 25
+access-list 100 permit tcp any host 192.168.5.4 eq 110
+access-list 100 permit tcp any host 192.168.5.4 eq 143
+
+ACL per HTTP, HTTPS
+access-list 100 permit tcp any host 192.168.5.3 eq 80
+access-list 100 permit tcp any host 192.168.5.3 eq 443
+
+Permetti traffico esistente
+access-list 100 permit tcp any any established
+access-list 100 permit udp any any established
+
+interface FastEthernet0/0
+ip access-group 100 in
+
+interface FastEthernet1/0
+ip access-group 100 out

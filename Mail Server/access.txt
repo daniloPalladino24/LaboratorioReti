@@ -1,0 +1,10 @@
+Connect:192.168
+GreetPause: 192.168
+ClientRate:192.168
+ClientConn:192.168
+spammer1@badsite.com REJECT
+spammer2@badsite.com REJECT
+spammer3@badsite.com REJECT
+spammer4@badsite.com REJECT
+pharmanova.it RELAY
+192.168 RELAY

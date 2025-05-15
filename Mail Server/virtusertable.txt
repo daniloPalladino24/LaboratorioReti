@@ -1,0 +1,8 @@
+root@pharmanova.it root
+postmaster@pharmanova.it postmaster
+admin@pharmanova.it admin
+dmz@pharmanova.it dmz
+danilo@pharmanova.it danilo
+vittorio@pharmanova.it vittorio
+francesco@pharmanova.it francesco
+damiano@pharmanova.it damiano

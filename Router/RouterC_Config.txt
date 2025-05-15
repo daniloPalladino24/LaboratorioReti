@@ -1,0 +1,38 @@
+hostname RouterC
+
+interface FastEthernet0/0
+  ip address 192.168.3.2 255.255.255.0
+  no shutdown
+
+interface FastEthernet1/0
+  ip address 192.168.7.2 255.255.255.0
+  no shutdown
+
+interface FastEthernet2/0
+  ip address 192.168.8.1 255.255.255.0
+  no shutdown
+
+interface FastEthernet3/0
+  ip address 192.168.10.2 255.255.255.0
+  no shutdown
+
+interface FastEthernet4/0
+  ip address 192.168.12.1 255.255.255.0
+  no shutdown
+
+ip dhcp excluded-address 192.168.3.1 192.168.3.10
+ip dhcp pool RETEC
+  network 192.168.3.0 255.255.255.0
+  default-router 192.168.3.2
+  dns-server 192.168.2.10
+
+router rip
+version 2
+  network 192.168.3.0
+  network 192.168.7.0
+  network 192.168.8.0
+  network 192.168.10.0
+  network 192.168.12.0
+
+ip domain-lookup
+ip nameserver 192.168.2.10

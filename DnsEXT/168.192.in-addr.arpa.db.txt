@@ -1,0 +1,22 @@
+$TTL 86400
+$ORIGIN 168.192.in-addr.arpa.
+@ IN SOA dns.pharmanova.it. root.dmz.pharmanova.it. (
+    2024071401 ; serial
+    43200 ; refresh
+    3600 ; retry after 1 hour
+    3600000 ; expire after 1000 hours
+    2592000 ; default ttl
+)
+; Definizione dei nameserver e dei server mail
+IN NS dns.pharmanova.it.
+IN NS dns.cloudflare.com.
+IN MX 10 mail.pharmanova.it.
+
+; Sottodomini
+0.5 IN PTR dmz.pharmanova.it
+
+; Host
+4.5 IN PTR mail.pharmanova.it.
+3.5 IN PTR www.pharmanova.it.
+10.5 IN PTR dns.pharmanova.it
+5.5 IN PTR proxy.pharmanova.it

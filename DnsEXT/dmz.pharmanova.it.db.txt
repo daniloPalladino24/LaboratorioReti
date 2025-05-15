@@ -1,0 +1,21 @@
+$TTL 86400
+$ORIGIN dmz.pharmanova.it.
+@ IN SOA dns.dmz.pharmanova.it. root.dmz.pharmanova.it. (
+2024071401 ; serial
+43200 ; refresh
+3600 ; retry after 1 hour
+3600000 ; expire after 1000 hours
+2592000 ; default ttl
+)
+; Definizione dei nameserver e dei server mail
+IN NS dns.dmz.pharmanova.it.
+IN NS dns.cloudflare.com.
+IN MX 10 mail.dmz.pharmanova.it.
+
+; Host di DMZ
+RouterF IN A 192.168.5.2
+Firewall IN A 192.168.5.1
+dns IN A 192.168.5.10
+www IN A 192.168.5.3
+mail IN A 192.168.5.4
+proxy IN A 192.168.5.5

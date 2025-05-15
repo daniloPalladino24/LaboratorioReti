@@ -1,0 +1,4 @@
+localhost
+mail.pharmanova.it
+pharmanova.it
+dmz.pharmanova.it

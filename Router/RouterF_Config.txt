@@ -1,0 +1,57 @@
+hostname RouterF
+
+interface FastEthernet0/0
+ ip address 192.168.5.2 255.255.255.0
+no shutdown
+
+interface FastEthernet0/0
+ ip address dhcp 
+no shutdown
+
+router rip
+version 2
+ network 192.168.5.0
+ip domain-lookup
+ip nameserver 192.168.2.10
+
+no access-list 101
+
+\\ ACL per permettere SMTP, POP3, IMAP, DNS, HTTPS, HTTP
+access-list 101 permit tcp any host 192.168.5.4 eq 25
+access-list 101 permit tcp any host 192.168.5.4 eq 110
+access-list 101 permit tcp any host 192.168.5.4 eq 143
+access-list 101 permit tcp any host 192.168.5.10 eq 53
+access-list 101 permit udp any host 192.168.5.10 eq 53
+access-list 101 permit tcp any host 192.168.5.3 eq 443
+access-list 101 permit tcp any host 192.168.5.5 eq 80
+
+\\ Permetti traffico esistente
+access-list 101 permit tcp any any established
+access-list 101 permit udp any any
+access-list 101 deny ip any any
+
+\\ Applicare l'ACL 101 all'interfaccia di ingresso
+interface FastEthernet1/0
+ ip access-group 101 in
+
+\\ Configurazione dell'interfaccia interna ed esterna
+interface FastEthernet1/0
+ip nat outside
+interface FastEthernet0/0
+ip nat inside
+ 
+\\ Redirezione pacchetti mail
+ip nat inside source static tcp 192.168.5.4 25 interface FastEthernet0/0 25
+
+\\ Redirezione pacchetti DNS
+ip nat inside source static udp 192.168.5.10 53 interface FastEthernet1/0 53
+ip nat inside source static tcp 192.168.5.10 53 interface FastEthernet1/0 53
+
+\\ Redirezione pacchetti Proxy
+ip nat inside source static tcp 192.168.5.5 80 interface FastEthernet1/0 80
+
+\\ Redirezione pacchetti Web
+ip nat inside source static tcp 192.168.5.3 443 interface FastEthernet1/0 443
+
+\\ Mascheramento IP per pacchetti uscenti
+ip nat inside source list 101 interface FastEthernet1/0 overload

@@ -1,0 +1,33 @@
+hostname RouterA
+
+interface FastEthernet0/0
+  ip address 192.168.1.2 255.255.255.0
+  no shutdown
+
+interface FastEthernet1/0
+  ip address 192.168.6.1 255.255.255.0
+  no shutdown
+
+interface FastEthernet2/0
+  ip address 192.168.9.1 255.255.255.0
+  no shutdown
+
+interface FastEthernet3/0
+  ip address 192.168.10.1 255.255.255.0
+  no shutdown
+
+ip dhcp excluded-address 192.168.1.1  192.168.1.10
+ip dhcp pool RETEA
+  network 192.168.1.0 255.255.255.0
+  default-router 192.168.1.2
+  dns-server 192.168.2.10
+
+router rip
+version 2
+  network 192.168.1.2
+  network 192.168.6.1
+  network 192.168.9.1
+  network 192.168.10.1
+
+ip domain-lookup
+ip nameserver 192.168.2.10
